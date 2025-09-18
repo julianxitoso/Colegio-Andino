@@ -1,0 +1,14 @@
+# Imagen base con PHP y Apache
+FROM php:8.2-apache
+
+# Instalar extensiones necesarias (ejemplo: mysql)
+RUN docker-php-ext-install pdo pdo_mysql
+
+# Copiar tu código al contenedor
+COPY . /var/www/html/
+
+# Exponer puerto que Render usará
+EXPOSE 10000
+
+# Apache debe escuchar el puerto de Render
+RUN sed -i 's/80/10000/' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
